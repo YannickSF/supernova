@@ -1,37 +1,116 @@
-## Welcome to GitHub Pages
+# supernova
+NoSQL database plug to REST API
 
-You can use the [editor on GitHub](https://github.com/YannickSF/supernova/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+---
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+## Quick Start : 
 
-### Markdown
+    cd supernova
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+Install dependances :  
 
-```markdown
-Syntax highlighted code block
+    pip3 install -r requirements.txt
 
-# Header 1
-## Header 2
-### Header 3
+Start api :
 
-- Bulleted
-- List
+    python3 index.py
 
-1. Numbered
-2. List
+---
 
-**Bold** and _Italic_ and `Code` text
+## API Endpoints : 
 
-[Link](url) and ![Image](src)
-```
+### GET : 
+*request :*
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+    curl --location --request GET 'http://localhost:5000/index'
 
-### Jekyll Themes
+*response*
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/YannickSF/supernova/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+        {
+            "table": [
+                {
+                    "key": "value",
+                    "keyPrime": "valuePrime",
+                    "primary": "keyId"
+                }
+            ]
+        }
 
-### Support or Contact
+### GET : key
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+*request :*
+
+    curl --location --request GET 'http://localhost:5000/index/keyId'
+
+*response :*
+
+    {
+        "item": [
+            {
+                "key": "value",
+                "keyPrime": "valuePrime",
+                "primary": "keyId"
+            }
+        ]
+    }
+
+### PUT : 
+*request :*
+
+    curl --location --request PUT 'http://localhost:5000/index/keyId' \
+    --header 'Content-Type: application/json' \
+    --data-raw '{
+        "key": "value",
+        "keyPrime": "valuePrime"
+    }'
+
+*response :*
+
+    {
+        "index": [
+            1
+        ],
+        "item": [
+            {
+                "key": "value",
+                "keyPrime": "valuePrime",
+                "primary": "keyId"
+            }
+        ]
+    }
+
+### DELETE : 
+*request :*
+
+    curl --location --request DELETE 'http://localhost:5000/index/keyId'
+
+*response :*
+
+    {
+        "item": [
+            1
+        ]
+    }
+
+--- 
+
+## Docker 
+
+build docker image:  
+
+    docker build -t supernova .
+
+run container :
+
+    docker run -d -p 5000:5000 supernova
+
+
+### ***change port***  
+
+- change `PORT` value in `index.py` 
+- rebuild image 
+- run by changing `-p <new_port>:<new_port>`
+ 
+
+--- 
+Powered By [Yannick S. F](https://linktr.ee/Yannick_SF)
